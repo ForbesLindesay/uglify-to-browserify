@@ -3,8 +3,8 @@ var br = require('../')
 var test = fs.readFileSync(require.resolve('uglify-js/test/run-tests.js'), 'utf8')
   .replace(/^#.*\n/, '')
 
-br(require.resolve('uglify-js'))
-  .pipe(fs.createWriteStream(__dirname + '/output.js'))
+var transform = br(require.resolve('uglify-js'))
+transform.pipe(fs.createWriteStream(__dirname + '/output.js'))
   .on('close', function () {
     Function('module,require', test)({
       filename: require.resolve('uglify-js/test/run-tests.js')
@@ -19,3 +19,4 @@ br(require.resolve('uglify-js'))
         }
       })
   })
+transform.end(fs.readFileSync(require.resolve('uglify-js'), 'utf8'))

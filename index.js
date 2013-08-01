@@ -3,6 +3,7 @@
 var path = require("path")
 var fs = require("fs")
 var PassThrough = require('stream').PassThrough || require('readable-stream').PassThrough
+var Transform = require('stream').Transform || require('readable-stream').Transform
 
 var cache = {}
 module.exports = transform
@@ -36,7 +37,11 @@ function transform(file) {
 }
 
 function makeStream(src) {
-    var res = new PassThrough();
-    res.end(src)
+    var res = new Transform();
+    res._transform = function (chunk, encoding, callback) { callback() }
+    res._flush = function (callback) {
+        res.push(src)
+        callback()
+    }
     return res;
 }
