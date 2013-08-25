@@ -1,6 +1,6 @@
 {
   "name": "uglify-to-browserify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A transform to make UglifyJS work in browserify.",
   "keywords": [],
   "dependencies": {},
