@@ -5,7 +5,7 @@
   "keywords": [],
   "dependencies": {},
   "devDependencies": {
-    "uglify-js": "~2.3.6",
+    "uglify-js": "~2.4.0",
     "source-map": "~0.1.27"
   },
   "scripts": {
