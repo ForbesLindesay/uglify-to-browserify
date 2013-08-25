@@ -2,8 +2,12 @@
 
 var path = require("path")
 var fs = require("fs")
-var PassThrough = require('stream').PassThrough || require('readable-stream').PassThrough
-var Transform = require('stream').Transform || require('readable-stream').Transform
+var PassThrough = require('stream').PassThrough
+var Transform = require('stream').Transform
+
+if (typeof Transform === 'undefined') {
+    throw new Error('UglifyJS only supports browserify when using node >= 0.10.x')
+}
 
 var cache = {}
 module.exports = transform
@@ -16,16 +20,12 @@ function transform(file) {
     var ast = uglify.parse(src)
     ast.figure_out_scope()
 
-    var functions = ast.functions
-        .map(function (node, name) {
-            return name
-        })
     var variables = ast.variables
         .map(function (node, name) {
             return name
         })
 
-    src += '\n\n' + variables.concat(functions).map(function (v) { return 'exports.' + v + ' = ' + v + ';' }).join('\n') + '\n\n'
+    src += '\n\n' + variables.map(function (v) { return 'exports.' + v + ' = ' + v + ';' }).join('\n') + '\n\n'
 
     src += 'exports.AST_Node.warn_function = function (txt) { if (typeof console != "undefined" && typeof console.warn === "function") console.warn(txt) }\n\n'
 
