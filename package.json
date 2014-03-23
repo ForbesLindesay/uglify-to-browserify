@@ -11,6 +11,10 @@
   "scripts": {
     "test": "node test/index.js"
   },
+  "files": [
+    "index.js",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ForbesLindesay/uglify-to-browserify.git"
