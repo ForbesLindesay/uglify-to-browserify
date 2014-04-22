@@ -2,9 +2,9 @@
 
 A transform to make UglifyJS work in browserify.
 
-[![Build Status](https://travis-ci.org/ForbesLindesay/uglify-to-browserify.png?branch=master)](https://travis-ci.org/ForbesLindesay/uglify-to-browserify)
-[![Dependency Status](https://gemnasium.com/ForbesLindesay/uglify-to-browserify.png)](https://gemnasium.com/ForbesLindesay/uglify-to-browserify)
-[![NPM version](https://badge.fury.io/js/uglify-to-browserify.png)](http://badge.fury.io/js/uglify-to-browserify)
+[![Build Status](https://img.shields.io/travis/ForbesLindesay/uglify-to-browserify/master.svg)](https://travis-ci.org/ForbesLindesay/uglify-to-browserify)
+[![Dependency Status](https://img.shields.io/gemnasium/ForbesLindesay/uglify-to-browserify.svg)](https://gemnasium.com/ForbesLindesay/uglify-to-browserify)
+[![NPM version](https://img.shields.io/npm/v/uglify-to-browserify.svg)](http://badge.fury.io/js/uglify-to-browserify)
 
 ## Installation
 
