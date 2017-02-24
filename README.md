@@ -1,5 +1,7 @@
 # uglify-to-browserify
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ForbesLindesay/uglify-to-browserify.svg)](https://greenkeeper.io/)
+
 A transform to make UglifyJS work in browserify.
 
 [![Build Status](https://img.shields.io/travis/ForbesLindesay/uglify-to-browserify/master.svg)](https://travis-ci.org/ForbesLindesay/uglify-to-browserify)
