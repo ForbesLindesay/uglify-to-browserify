@@ -1,22 +1,37 @@
+var assert = require('assert');
 var fs = require('fs')
+var path = require('path')
+var resolve = require('resolve')
 var br = require('../')
-var test = fs.readFileSync(require.resolve('uglify-js/test/run-tests.js'), 'utf8')
-  .replace(/^#.*\n/, '')
 
-var transform = br(require.resolve('uglify-js'))
-transform.pipe(fs.createWriteStream(__dirname + '/output.js'))
-  .on('close', function () {
-    Function('module,require', test)({
-      filename: require.resolve('uglify-js/test/run-tests.js')
-    },
+var transform = br(require.resolve('uglify-js'));
+var data = '';
+transform.on('data', function (nextData) {
+    data += nextData.toString('utf8');
+  })
+  .on('end', function () {
+    const mod = {exports: {}}
+    Function('module,exports,require', data)(
+      mod,
+      mod.exports,
       function (name) {
-        if (name === '../tools/node') {
-          return require('./output.js')
-        } else if (/^[a-z]+$/.test(name)) {
-          return require(name)
-        } else {
-          throw new Error('I didn\'t expect you to require ' + name)
+        switch (name) {
+          case 'util':
+            return require('util')
+          case 'source-map':
+            return require(resolve.sync(name, {
+              basedir: path.dirname(require.resolve('uglify-js'))
+            }))
+          default:
+            throw new Error('Did not expect ' + name)
         }
-      })
+      }
+    )
+    var uglify = mod.exports
+    var src = 'function add(firstValue, secondValue) { return firstValue + secondValue }'
+    var output = uglify.minify(src, {fromString: true}).code
+    assert(src.length > 35, 'minifying should make the output nice and short')
+    assert(output.length < 35, 'minifying should make the output nice and short')
+    assert(Function('a,b', output + ';return add(a, b)')(40, 2) === 42, 'output code still works')
   })
 transform.end(fs.readFileSync(require.resolve('uglify-js'), 'utf8'))
