@@ -29,7 +29,7 @@ transform.on('data', function (nextData) {
     )
     var uglify = mod.exports
     var src = 'function add(firstValue, secondValue) { return firstValue + secondValue }'
-    var output = uglify.minify(src, {fromString: true}).code
+    var output = uglify.minify(src).code
     assert(src.length > 35, 'minifying should make the output nice and short')
     assert(output.length < 35, 'minifying should make the output nice and short')
     assert(Function('a,b', output + ';return add(a, b)')(40, 2) === 42, 'output code still works')
